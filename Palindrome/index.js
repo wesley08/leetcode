@@ -8,6 +8,8 @@ var isPalindromeWithTempolary = function (x) {
 const testIsPalindromeWithTempolary = isPalindromeWithTempolary("tetstet");
 console.log(testIsPalindromeWithTempolary);
 
+// ------------------------------------
+
 let isPalindromeWithoutTemp = function (x) {
   for (let i = 0; i <= x.length / 2; i++) {
     if (x[i] != x[x.length - i - 1]) return false;
@@ -16,6 +18,8 @@ let isPalindromeWithoutTemp = function (x) {
 };
 const testIsPalindromeWithoutTemp = isPalindromeWithoutTemp("a1sa23aas1a");
 console.log(testIsPalindromeWithoutTemp);
+
+// ------------------------------------
 
 let palindromeRecursive = function (x, i) {
   if (i < x.length / 2) {
@@ -34,3 +38,18 @@ let isPalindrome = function (x) {
 
 const test = isPalindrome("121");
 console.log(test);
+
+// ------------------------------------
+
+var isPalindromeLeetCode = function (x) {
+  if (x < 0) {
+    return false;
+  }
+
+  const temp = x.toString();
+
+  for (let i = 0; i <= temp.length / 2; i++) {
+    if (temp[i] !== temp[temp.length - i - 1]) return false;
+  }
+  return true;
+};

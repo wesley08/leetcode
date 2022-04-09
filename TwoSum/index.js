@@ -16,3 +16,24 @@ const test = twoSum([2, 7, 11, 15], 9);
 // const test = twoSum([3, 2, 4], 6);
 // const test = twoSum([0, 4, 3, 0], 0);
 console.log(test);
+
+var twoSumWithRecursive = function (nums, target, i, hashMap) {
+  if (i < nums.length) {
+    const calculate = target - nums[i];
+    if (hashMap.has(calculate)) {
+      return [hashMap.get(calculate), i];
+    }
+    hashMap.set(nums[i], i);
+    return twoSumWithRecursive(nums, target, i + 1, hashMap);
+  }
+};
+
+var twoSumWith = function (nums, target) {
+  let hashMap = new Map();
+  return twoSumWithRecursive(nums, target, 0, hashMap);
+};
+
+const testRecursive = twoSumWith([2, 7, 11, 15], 9);
+// const testRecursive = twoSum([3, 2, 4], 6);
+// const testRecursive = twoSum([0, 4, 3, 0], 0);
+console.log(testRecursive, "recursive");
