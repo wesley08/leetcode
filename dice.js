@@ -9,6 +9,7 @@ let getStepToChange = (a, b) => {
 let minStepDice = (arr) => {
   let minStep = Number.MAX_VALUE;
   for (let i = 1; i <= 6; i++) {
+    //loop for the dice 1 to 6
     let currentStep = 0;
     for (let j = 0; j < arr.length; j++) {
       currentStep += getStepToChange(arr[j], i);

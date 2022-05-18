@@ -7,4 +7,7 @@ function compareTriplets(a, b) {
   return temp;
 }
 
-console.log([17, 28, 30], [99, 16, 8]);
+console.log(compareTriplets([17, 28, 30], [99, 16, 8]));
+// 17 != 99 , 17 > 99 ? temp[1] +=1
+// 28 != 16 , 28 > 16 ? temp[0] +=1
+// 30 != 8 , 30 > 8 ? temp[0] +=1

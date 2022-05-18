@@ -209,5 +209,10 @@ const isPrime = (n) => {
 
 console.log(10, " is prime?", isPrime(10));
 console.log(7, " is prime?", isPrime(7));
+// 7 % 2 = 1
+// 7 % 3 = 1
+// 7 % 4 = 1
+// 7 % 5 = 2
+// 7 % 6 = 1
 console.log(3, " is prime?", isPrime(3));
 console.log(9, " is prime?", isPrime(9));

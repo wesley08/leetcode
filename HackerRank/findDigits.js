@@ -7,3 +7,8 @@ function findDigits(n) {
   }
   return temp;
 }
+console.log(findDigits(1234));
+// 1234 % 1 = 0, temp + 1
+// 1234 % 2 = 0, temp + 1
+// 1234 % 3 = 1,
+// 1234 % 4 = 2,

@@ -35,7 +35,7 @@ var isValid = function (s) {
       temp.push(s[i]);
     } else {
       if (temp[temp.length - 1] == parathesis[s[i]]) {
-        temp.splice(temp.length - 1, 1);
+        temp.pop();
       } else {
         return false;
       }

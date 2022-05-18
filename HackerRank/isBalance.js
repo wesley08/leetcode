@@ -7,8 +7,10 @@ function isBalanced(s) {
 
   for (let i = 0; i < s.length; i++) {
     if (s[i] == "{" || s[i] == "[" || s[i] == "(") temp.push(s[i]);
+    // if the open brackets will be push to the temp
     else {
       if (temp[temp.length - 1] == paratheses[s[i]]) {
+        // get the lastest temp value if the open brackets is suitable with the closes bracket will remove the latest temp
         temp.splice(temp.length - 1, 1);
       } else {
         return "NO";
