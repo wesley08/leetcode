@@ -179,3 +179,42 @@
 
 //   console.log(temp);
 // }
+
+// const f = [1, 2, 3];
+// for (let i = 3; i <= 4; i++) {
+//   f[i] = f[i - 1] + f[i - 2];
+// }
+// console.log(f);
+
+const way = (arr, n) => {
+  //   const len = arr.length;
+  //   const dp = [1];
+  //   for (let i = 0; i < len; i++) {
+  //     console.log(i, " i ");
+  //     for (let j = arr[i]; j <= n; j++) {
+  //       //1
+  //       if (dp[j] === undefined) dp[j] = dp[j - arr[i]];
+  //       else dp[j] += dp[j - arr[i]];
+  //     }
+  //   }
+  //   console.log(dp);
+  //   return dp[n];]
+  if (n == 0) {
+    return 1;
+  }
+
+  // return 0 if total becomes negative
+  if (n < 0) {
+    return 0;
+  }
+  let result = 0;
+
+  // do for each coin
+  arr.forEach((c) => {
+    result += way(arr, n - c);
+  });
+  return result;
+};
+
+console.log(way([1, 2, 3], 4));
+console.log(way([2, 5, 3, 6], 10));
