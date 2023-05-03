@@ -14,3 +14,5 @@ function camelcase(s = "saveChangesInTheEditor") {
   }
   return result;
 }
+
+console.log(camelcase());

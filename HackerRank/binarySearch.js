@@ -8,6 +8,7 @@ const binarySearch = (arr, target) => {
     else if (target < arr[mid]) right = mid - 1;
     else left = mid + 1;
   }
+
   return -1;
 };
 console.log(binarySearch([2, 3, 5, 7, 8, 10, 12, 15, 18, 20, 21], 7));
