@@ -10,3 +10,5 @@ function semordnilap(words) {
 
   return result;
 }
+
+console.log(semordnilap(["desserts", "stressed", "hello"]));

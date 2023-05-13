@@ -3,16 +3,10 @@ function tournamentWinner(competitions, results) {
   let map = {};
 
   for (let i = 0; i < competitions.length; i++) {
-    if (results[i] === 0) {
-      map[competitions[i][1]]
-        ? (map[competitions[i][1]] += 1)
-        : (map[competitions[i][1]] = 1);
-    } else {
-      map[competitions[i][0]]
-        ? (map[competitions[i][0]] += 1)
-        : (map[competitions[i][0]] = 1);
-    }
+    const winner = competitions[i][results[i] === 0 ? 1 : 0];
+    map[winner] = (map[winner] || 0) + 1;
   }
+
   return Object.entries(map).sort(([, a], [, b]) => b - a)[0][0];
 }
 

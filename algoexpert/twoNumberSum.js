@@ -1,10 +1,10 @@
 function twoNumberSum(array, targetSum) {
   // Write your code here.
   const map = {};
-  for (let i = 0; i < array.length; i++) {
-    const calc = targetSum - array[i];
-    if (map[calc]) return [map[calc], array[i]];
-    else map[array[i]] = array[i];
+  for (const number of array) {
+    const calc = targetSum - number;
+    if (map[calc]) return [map[calc], number];
+    else map[number] = number;
   }
 }
 

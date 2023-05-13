@@ -2,8 +2,7 @@ function generateDocument(characters, document) {
   let temp = {};
 
   for (let i = 0; i < characters.length; i++) {
-    if (temp[characters[i]]) temp[characters[i]] += 1;
-    else temp[characters[i]] = 1;
+    temp[characters[i]] = (temp[characters[i]] || 0) + 1;
   }
 
   for (let i = 0; i < document.length; i++) {
