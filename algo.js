@@ -1,16 +1,14 @@
 const balancedBrackets = (brackets) => {
-  const validbrackets = { "}": "{", "]": "[", ")": "(" };
+  const compare = { "}": "{", "]": "[", ")": "(" };
   const temp = [];
   for (const bracket of brackets) {
-    if ("{}()[]".includes(bracket)) {
-      if (bracket === "{" || bracket === "[" || bracket === "(") {
+    if ("{}[]()".includes(bracket)) {
+      if ("{[(".includes(bracket)) {
         temp.push(bracket);
       } else {
-        if (validbrackets[bracket] === temp[temp.length - 1]) {
+        if (temp[temp.length - 1] === compare[bracket]) {
           temp.pop();
-        } else {
-          return false;
-        }
+        } else return false;
       }
     }
   }
@@ -20,7 +18,7 @@ const balancedBrackets = (brackets) => {
 console.log(balancedBrackets("([])(){}(())()()"));
 console.log(balancedBrackets("(agwgg)([ghhheah%&@Q])"));
 console.log(balancedBrackets(")[]}"));
-console.log(balancedBrackets("(A)"));
+console.log(balancedBrackets("(A))"));
 
 const binarySearch = (arr, target) => {
   let left = 0;
@@ -43,9 +41,11 @@ const firstNonRepeatingCharacter = (string) => {
   for (const char of string) {
     temp[char] = (temp[char] || 0) + 1;
   }
+
   for (const key in temp) {
     if (temp[key] === 1) return key;
   }
+
   return -1;
 };
 
@@ -56,11 +56,11 @@ const generateDocument = (chars, document) => {
   for (const char of chars) {
     temp[char] = (temp[char] || 0) + 1;
   }
+
   for (const char of document) {
     if (!temp[char]) return false;
     temp[char] -= 1;
   }
-
   return true;
 };
 
@@ -76,7 +76,6 @@ const getNthFib = (num) => {
     second = first + second;
     first = second - first;
   }
-
   return second;
 };
 
@@ -97,7 +96,8 @@ const isValidSubsequence = (arr, sub) => {
     if (counter === sub.length) return true;
     if (iterator === sub[counter]) counter++;
   }
-  return counter === sub.length;
+
+  return sub.length === counter;
 };
 
 console.log(
@@ -106,16 +106,14 @@ console.log(
 
 const quickSort = (arr) => {
   if (arr.length <= 1) return arr;
-
-  let templeft = [];
-  let tempright = [];
-  let temp = [arr[0]];
-
+  let temp = arr[0];
+  let left = [];
+  let right = [];
   for (let i = 1; i < arr.length; i++) {
-    if (arr[i] < temp) templeft.push(arr[i]);
-    else tempright.push(arr[i]);
+    if (arr[i] < temp) left.push(arr[i]);
+    else right.push(arr[i]);
   }
-  return quickSort(templeft).concat(temp, quickSort(tempright));
+  return quickSort(left).concat(temp, quickSort(right));
 };
 
 console.log(quickSort([5, 1, 22, 25, 6, -1, 8, 10, 11, 223]));
@@ -125,23 +123,22 @@ const reverseWordsInString = (string) => {
   let result = "";
 
   for (let i = string.length - 1; i >= 0; i--) {
-    if (string[i] === " ") {
-      result = temp + " ";
-      temp = "";
-    } else {
+    if (string[i] !== " ") {
       temp = string[i] + temp;
+    } else {
+      result += temp + " ";
+      temp = "";
     }
   }
 
   return result + temp;
 };
 
-console.log(reverseWordsInString("testing adbc"));
+console.log(reverseWordsInString("testing adbc dsd"));
 
 const runLengthEncoding = (string) => {
   let count = 1;
   let result = "";
-
   for (let i = 0; i < string.length; i++) {
     if (string[i] === string[i + 1] && count < 9) {
       count++;
