@@ -151,3 +151,14 @@ const runLengthEncoding = (string) => {
 };
 
 console.log(runLengthEncoding("AAAAAAAAAAAAAAAABBBDDXX"));
+
+const twoNumberSum = (arr, target) => {
+  let temp = {};
+  for (let i = 0; i < arr.length; i++) {
+    const calc = target - arr[i];
+    if (temp[calc]) return [temp[calc], i];
+    temp[arr[i]] = i;
+  }
+};
+
+console.log(twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6, 3, 444], 10));
