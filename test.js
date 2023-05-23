@@ -186,35 +186,74 @@
 // }
 // console.log(f);
 
-const way = (arr, n) => {
-  //   const len = arr.length;
-  //   const dp = [1];
-  //   for (let i = 0; i < len; i++) {
-  //     console.log(i, " i ");
-  //     for (let j = arr[i]; j <= n; j++) {
-  //       //1
-  //       if (dp[j] === undefined) dp[j] = dp[j - arr[i]];
-  //       else dp[j] += dp[j - arr[i]];
-  //     }
-  //   }
-  //   console.log(dp);
-  //   return dp[n];]
-  if (n == 0) {
-    return 1;
-  }
+// const way = (arr, n) => {
+//   //   const len = arr.length;
+//   //   const dp = [1];
+//   //   for (let i = 0; i < len; i++) {
+//   //     console.log(i, " i ");
+//   //     for (let j = arr[i]; j <= n; j++) {
+//   //       //1
+//   //       if (dp[j] === undefined) dp[j] = dp[j - arr[i]];
+//   //       else dp[j] += dp[j - arr[i]];
+//   //     }
+//   //   }
+//   //   console.log(dp);
+//   //   return dp[n];]
+//   if (n == 0) {
+//     return 1;
+//   }
 
-  // return 0 if total becomes negative
-  if (n < 0) {
-    return 0;
-  }
-  let result = 0;
+//   // return 0 if total becomes negative
+//   if (n < 0) {
+//     return 0;
+//   }
+//   let result = 0;
 
-  // do for each coin
-  arr.forEach((c) => {
-    result += way(arr, n - c);
-  });
-  return result;
+//   // do for each coin
+//   arr.forEach((c) => {
+//     result += way(arr, n - c);
+//   });
+//   return result;
+// };
+
+// console.log(way([1, 2, 3], 4));
+// console.log(way([2, 5, 3, 6], 10));
+const insertionSort = (arr) => {
+  for (let i = 1; i < arr.length; i++) {
+    let j = i - 1;
+    const temp = arr[i];
+    while (j >= 0 && arr[j] > temp) {
+      arr[j + 1] = arr[j];
+      j--;
+    }
+    arr[j + 1] = temp;
+  }
+  console.log(arr);
 };
 
-console.log(way([1, 2, 3], 4));
-console.log(way([2, 5, 3, 6], 10));
+insertionSort([2, 4, 6, 8, 3]);
+
+const binarySearch = (arr, target) => {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left <= right) {
+    const mid = Math.round((left + right) / 2);
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] < target) left = mid + 1;
+    else right = mid - 1;
+  }
+
+  return -1;
+};
+
+console.log(binarySearch([2, 3, 5, 7, 8, 10, 12, 15, 18, 20, 21], 7));
+
+let a = 10;
+let b = 2;
+
+// a = a + b; //12
+// b = a - b; // 12 -2 =10
+// a = a - b; // 12 - 10 = 2
+console.log(a);
+console.log(b);

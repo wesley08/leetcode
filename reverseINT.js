@@ -8,8 +8,8 @@ const reverseINT = (num) => {
   while (num !== 0) {
     const gettingLastNumber = num % Math.pow(10, i); // 2343 % 10 will get 3
     num -= gettingLastNumber; // 2343 - 3 = 2340
-    temp += (gettingLastNumber * Math.pow(10, len - i)) / Math.pow(10, i - 1);
     // 0 += (3 * 1000 (10pow3)) / 1
+    temp += (gettingLastNumber * Math.pow(10, len - i)) / Math.pow(10, i - 1);
     //temp = 3000
     i++;
   }
