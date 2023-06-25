@@ -2,17 +2,15 @@ const balancedBrackets = (str) => {
   const compare = { "}": "{", "]": "[", ")": "(" };
   const temp = [];
 
-  for (let i = 0; i < str.length; i++) {
-    if ("{}()[]".includes(str[i])) {
-      if ("{([".includes(str[i])) {
-        temp.push(str[i]);
-      } else {
-        if (compare[str[i]] === temp[temp.length - 1]) temp.pop();
+  for (const i of str) {
+    if ("{}()[]".includes(i)) {
+      if ("{[(".includes(i)) temp.push(i);
+      else {
+        if (temp[temp.length - 1] === compare[i]) temp.pop();
         else return false;
       }
     }
   }
-
   return !temp.length;
 };
 console.log(balancedBrackets("([])(){}(())()()"));
@@ -40,7 +38,7 @@ const bubbleSort = (arr, desc) => {
       if (desc ? arr[i] > arr[j] : arr[i] < arr[j]) {
         arr[j] += arr[i];
         arr[i] = arr[j] - arr[i];
-        arr[j] = arr[j] - arr[i];
+        arr[j] -= arr[i];
       }
     }
   }
@@ -48,9 +46,10 @@ const bubbleSort = (arr, desc) => {
 };
 
 console.log(bubbleSort([8, 5, 2, 9, 5, 6, 3], false));
+console.log(bubbleSort([8, 5, 2, 9, 5, 6, 3], true));
 
 const findThreeLargestNumbers = (arr) => {
-  arr = arr.sort((a, b) => b - a);
+  arr.sort((a, b) => b - a);
   return [arr[0], arr[1], arr[2]];
 };
 
@@ -60,8 +59,8 @@ console.log(
 
 const firstNonRepeatingCharacter = (str) => {
   const temp = {};
-  for (const iterator of str) {
-    temp[iterator] = (temp[iterator] || 0) + 1;
+  for (const i of str) {
+    temp[i] = (temp[i] || 0) + 1;
   }
 
   for (const key in temp) {
@@ -76,13 +75,13 @@ console.log(firstNonRepeatingCharacter("axxbdca"));
 const generateDocument = (str, result) => {
   const temp = {};
 
-  for (const iterator of str) {
-    temp[iterator] = (temp[iterator] || 0) + 1;
+  for (const i of str) {
+    temp[i] = (temp[i] || 0) + 1;
   }
 
-  for (const iterator of result) {
-    if (temp[iterator] === 0) return false;
-    temp[iterator] -= 1;
+  for (const i of result) {
+    if (temp[i] === 0) return false;
+    temp[i] -= 1;
   }
 
   return true;
@@ -93,20 +92,21 @@ console.log(
 );
 
 const getNthFib = (n) => {
-  if (n == 1) return 0;
-  if (n <= 3) return 1;
+  if (n == 0) return 0;
+  if (n <= 2) return 1;
 
   let first = 1;
   let second = 1;
 
-  for (let i = 0; i < n - 3; i++) {
-    second = first + second;
+  for (let i = 0; i < n - 2; i++) {
+    second += first;
     first = second - first;
   }
   return second;
 };
 
 console.log(getNthFib(10));
+console.log(getNthFib(0));
 console.log(getNthFib(1));
 console.log(getNthFib(2));
 console.log(getNthFib(3));
@@ -119,24 +119,23 @@ const isPalindrome = (str) => {
 };
 
 console.log(isPalindrome("abcdcba"));
+console.log(isPalindrome("abcdxcba"));
 
 const isValidSubsequence = (arr, sub) => {
   let count = 0;
-  for (let i = 0; i < arr.length; i++) {
+  for (const i of arr) {
     if (count === sub.length) return true;
-    if (arr[i] == sub[count]) count++;
+    if (i === sub[count]) count++;
   }
-
   return count === sub.length;
 };
 
 console.log(isValidSubsequence([5, 1, 22, 25, 6, -1, 8, 10], [1, 6, -1, 10]));
 
 const nonConstructibleChange = (arr) => {
-  arr = arr.sort((a, b) => a - b);
+  arr.sort((a, b) => a - b);
   let temp = 0;
-
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     if (temp + 1 < arr[i]) break;
     temp += arr[i];
   }
@@ -145,17 +144,12 @@ const nonConstructibleChange = (arr) => {
 
 console.log(nonConstructibleChange([5, 7, 1, 1, 2, 3, 22]));
 
-function productSum(array, multiply = 1) {
+function productSum(arr, multiply = 1) {
   let sum = 0;
-
-  for (let i = 0; i < array.length; i++) {
-    if (typeof array[i] === "number") {
-      sum += array[i];
-    } else {
-      sum += productSum(array[i], multiply + 1);
-    }
+  for (const i of arr) {
+    if (typeof i === "number") sum += i;
+    else sum += productSum(i, multiply + 1);
   }
-
   return sum * multiply;
 }
 
@@ -168,12 +162,13 @@ const quickSort = (arr, desc) => {
   const right = [];
 
   for (let i = 1; i < arr.length; i++) {
-    if (desc ? arr[i] > temp : arr[i] < temp) left.push(arr[i]);
-    else right.push(arr[i]);
+    if (desc ? temp > arr[i] : temp < arr[i]) right.push(arr[i]);
+    else left.push(arr[i]);
   }
-
-  return quickSort(left, desc).concat(temp, quickSort(right, desc));
+  return quickSort(left, true).concat(temp, quickSort(right, true));
 };
+
+console.log("quickSort DESC:", quickSort([8, 5, 2, 9, 5, 6, 3], true));
 
 console.log("quickSort :", quickSort([8, 5, 2, 9, 5, 6, 3], false));
 
@@ -196,9 +191,8 @@ const runLengthEncoding = (str) => {
   let count = 1;
   let result = "";
   for (let i = 0; i < str.length; i++) {
-    if (str[i] === str[i + 1] && count < 9) {
-      count++;
-    } else {
+    if (str[i] === str[i + 1] && count < 9) count++;
+    else {
       result += count + str[i];
       count = 1;
     }
@@ -216,8 +210,8 @@ const semordnilap = (arr) => {
   const result = [];
   for (let i = 0; i < arr.length; i++) {
     const reverse = arr[i].split("").reverse().join("");
-    if (temp[reverse]) result.push([reverse, arr[i]]);
-    else temp[arr[i]] = reverse;
+    if (temp[reverse]) result.push([temp[reverse], arr[i]]);
+    temp[arr[i]] = arr[i];
   }
   return result;
 };
@@ -228,48 +222,43 @@ console.log(
 );
 
 const sortedSquaredArray = (arr) => {
-  const newResult = new Array(arr.length);
-  let sPointer = 0;
-  let ePointer = arr.length - 1;
-
-  for (let i = arr.length - 1; i > -1; i--) {
-    const start = arr[sPointer] ** 2;
-    const end = arr[ePointer] ** 2;
-
+  const result = new Array(arr.length);
+  let spointer = 0;
+  let epointer = arr.length - 1;
+  for (let i = epointer; i > -1; i--) {
+    const start = arr[spointer] ** 2;
+    const end = arr[epointer] ** 2;
     if (end > start) {
-      newResult[i] = end;
-      ePointer--;
+      result[i] = end;
+      end--;
     } else {
-      newResult[i] = start;
-      sPointer++;
+      result[i] = start;
+      start++;
     }
   }
-
-  return newResult;
+  return result;
 };
 
 console.log(sortedSquaredArray([1, 2, 3, 5, 6, 8, 9]));
 console.log(sortedSquaredArray([10, 1, 2, 3, 5, 6, 8, 9]));
 
 const tournamentWinner = (arr, result) => {
-  const temp = {};
+  const res = {};
   for (let i = 0; i < arr.length; i++) {
-    if (result[i]) temp[arr[i][1]] = (temp[arr[i][1]] || 0) + 1;
-    else temp[arr[i][0]] = (temp[arr[i][0]] || 0) + 1;
+    res[arr[i][result[i]]] = (res[arr[i][result[i]]] || 0) + 1;
   }
-
-  return Object.entries(temp).sort(([, a], [, b]) => b - a)[0][0];
+  return Object.entries(res).sort(([, a], [, b]) => b - a)[0][0];
 };
 
 console.log(
   tournamentWinner(
     [
-      ["HTML", "C#"],
-      ["C#", "Python"],
-      ["Python", "HTML"],
-      ["Python", "HTML"],
-      ["Python", "Python"],
-      ["C#", "Python"],
+      ["HTML", "C#"], //HTML
+      ["C#", "Python"], //Python
+      ["Python", "HTML"], //HTML
+      ["Python", "HTML"], //Python
+      ["Python", "Python"], //Python
+      ["C#", "Python"], //C#
     ],
     [0, 1, 1, 0, 1, 0]
   )
@@ -279,9 +268,10 @@ const twoNumberSum = (arr, target) => {
   const temp = {};
   for (let i = 0; i < arr.length; i++) {
     const calc = target - arr[i];
-    if (temp[calc]) return [calc, temp[calc]];
-    else temp[arr[i]] = calc;
+    if (temp[calc]) return [temp[calc], i, [calc, arr[i]]];
+    else temp[arr[i]] = i;
   }
+  return -1;
 };
 console.log(twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10));
 
@@ -309,3 +299,55 @@ const insertionSort = (arr) => {
 };
 
 console.log(insertionSort([1, 5, 7, 3, 8]));
+
+const round = (str) => {
+  str = str.toUpperCase();
+  let result = 0;
+  for (let i = 0; i < str.length - 1; i++) {
+    const firstAlphabet = str.charCodeAt(i) % 64;
+    const secondAlphabet = str.charCodeAt(i + 1) % 64;
+    const firstCalculation = Math.abs(firstAlphabet - secondAlphabet);
+    const conditions =
+      firstAlphabet < secondAlphabet
+        ? [secondAlphabet, firstAlphabet]
+        : [firstAlphabet, secondAlphabet];
+
+    const secondCalculation = Math.abs(conditions[0] - 26) + conditions[1];
+
+    result += Math.min(firstCalculation, secondCalculation);
+  }
+
+  return result;
+};
+
+console.log(round("BSDZ"));
+console.log(round("XWZf"));
+console.log(round("xeyd"));
+console.log(round("ABCD"));
+
+const caesar = (s, k) => {
+  let result = "";
+  k = k % 26;
+  for (const i of s) {
+    const char = i.charCodeAt(0);
+    const charCal = char + k;
+    const conditionUpper = char <= 90 && char >= 65;
+    const conditionLower = char <= 122 && char >= 97;
+
+    result +=
+      conditionUpper || conditionLower
+        ? String.fromCharCode(
+            (conditionLower && charCal > 122) ||
+              (charCal > 90 && conditionUpper)
+              ? charCal - 26
+              : charCal
+          )
+        : i;
+  }
+  return result;
+};
+
+console.log(caesar("middle-Outz", 2));
+console.log(caesar("www.abc.xy", 87));
+console.log(caesar("xeyd", 3));
+console.log(caesar("ABCD", 1));
