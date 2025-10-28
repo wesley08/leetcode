@@ -141,12 +141,53 @@ const recursivemaxProfit = (list, buy, max, i) => {
 
 const slidingWindows = (arr, k) => {
   console.log(slidingWindows.name, " ", arr, " ", k);
+  let sumNum = arr.slice(0, k).reduce((a, b) => a + b);
+  const result = [sumNum];
+  for (let i = 0; i < arr.length - k; i++) {
+    sumNum = sumNum - arr[i] + arr[i + k];
+    result.push(sumNum);
+  }
+  return result;
 };
 
-console.log(slidingWindows([1, 2, 3, 4, 5, 6, 7], 2)); //3,5,7,9,11,13
+const recursiveslidingWindows = (arr, k, sumNum = 0, i = 0) => {
+  if (arr.length < k) return [];
+  if (i < k) return recursiveslidingWindows(arr, k, sumNum + arr[i], i + 1);
+
+  const result = [sumNum];
+
+  const helper = (sumNum, i) => {
+    if (i + k >= arr.length) return result;
+
+    sumNum = sumNum - arr[i] + arr[i + k];
+    result.push(sumNum);
+    return helper(sumNum, i + 1);
+  };
+
+  return helper(sumNum, 0);
+};
+
+console.log(slidingWindows([1, 2, 3, 4, 5, 6, 7], 4)); //3,5,7,9,11,13
 console.log(slidingWindows([1, 2, 3, 4, 5, 6, 7], 3)); //6,9,12,15,18
 console.log(slidingWindows([1, 2, 3, 56, 23, 63, 91], 4));
 console.log(slidingWindows([1, 2, 3, 56, 23, 63, 91], 5));
+
+console.log(
+  "recursiveslidingWindows",
+  recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 4)
+); //3,5,7,9,11,13
+console.log(
+  "recursiveslidingWindows",
+  recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 3)
+); //6,9,12,15,18
+console.log(
+  "recursiveslidingWindows",
+  recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 4)
+);
+console.log(
+  "recursiveslidingWindows",
+  recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 5)
+);
 
 console.log(balancedBrackets("([])(){}(())()()"));
 console.log(balancedBrackets("(agwgg)([ghhheah%&@Q])"));
