@@ -24,10 +24,10 @@ const binarySearch = (list, target) => {
   console.log(binarySearch.name, " ", list, " target: ", target);
 
   let left = 0;
-  let right = list.length;
+  let right = list.length - 1;
 
   while (left <= right) {
-    const mid = Math.round((left + right) / 2);
+    const mid = Math.floor((left + right) / 2);
     if (list[mid] === target) return mid;
     else if (list[mid] < target) left = mid + 1;
     else right = mid - 1;
@@ -36,15 +36,18 @@ const binarySearch = (list, target) => {
   return -1;
 };
 
-const recursiveBinarySearch = (list, target, left, right) => {
-  if (left <= right) {
-    const mid = Math.round((left + right) / 2);
-    if (list[mid] === target) return mid;
-    else if (list[mid] < target) left = mid + 1;
-    else right = mid - 1;
-
-    return recursiveBinarySearch(list, target, left, right);
-  }
+const recursiveBinarySearch = (
+  list,
+  target,
+  left = 0,
+  right = list.length - 1
+) => {
+  if (left > right) return -1;
+  const mid = Math.floor((left + right) / 2);
+  if (list[mid] === target) return mid;
+  if (list[mid] < target)
+    return recursiveBinarySearch(list, target, mid + 1, right);
+  return recursiveBinarySearch(list, target, left, mid - 1);
 };
 
 const firstNonRepeatingCharacter = (string) => {
@@ -56,7 +59,8 @@ const firstNonRepeatingCharacter = (string) => {
   }
 
   for (let i = 0; i < string.length; i++) {
-    if (hash[string[i]] === 1) return string[i];
+    const char = string[i];
+    if (hash[char] === 1) return char;
   }
   return false;
 };
@@ -67,9 +71,12 @@ const recursivefirstNonRepeatingCharacter = (string, hash, i) => {
     hash[char] = (hash[char] || 0) + 1;
     return recursivefirstNonRepeatingCharacter(string, hash, i + 1);
   }
+
   const findUnique = (string, i = 0) => {
     if (string.length === i) return false;
-    return hash[string[i]] === 1 ? string[i] : findUnique(string, i + 1);
+    const char = string[i];
+    if (hash[char] === 1) return char;
+    return findUnique(string, i + 1);
   };
 
   return findUnique(string);
@@ -85,7 +92,7 @@ const generateDocument = (dict, sentence) => {
 
   for (let i = 0; i < sentence.length; i++) {
     const char = sentence[i];
-    if (!hash[char] && hash[char] === 0) return false;
+    if (!hash[char] || hash[char] === 0) return false;
     hash[char] -= 1;
   }
   return true;
@@ -98,23 +105,25 @@ const twoNumberSum = (list, target) => {
   for (let i = 0; i < list.length; i++) {
     const number = list[i];
     const cal = target - number;
-    if (hash[cal]) return [hash[cal], number];
-    else hash[number] = number;
+    if (cal in hash) return [cal, number];
+    hash[number] = true;
   }
+  return [];
 };
 
 const recursiveTwoSum = (list, target, i, hash) => {
+  if (i >= list.length) return [];
+
   const number = list[i];
-  const cal = target - list[i];
-  if (i < list.length) {
-    if (hash[cal]) return [hash[cal], number];
-    hash[number] = number;
-    return recursiveTwoSum(list, target, i + 1, hash);
-  }
+  const cal = target - number;
+  if (cal in hash) return [cal, number];
+  hash[number] = true;
+  return recursiveTwoSum(list, target, i + 1, hash);
 };
 
 const maxProfit = (list) => {
   console.log(maxProfit.name, " ", list);
+
   let buy = list[0];
   let max = 0;
 
@@ -128,19 +137,17 @@ const maxProfit = (list) => {
   return max;
 };
 
-const recursivemaxProfit = (list, buy, max, i) => {
-  if (i < list.length) {
-    const cal = list[i] - buy;
-    if (buy > list[i]) buy = list[i];
-    if (cal > max) max = cal;
-    return recursivemaxProfit(list, buy, max, i + 1);
-  } else {
-    return max;
-  }
+const recursivemaxProfit = (list, buy = list[0], max = 0, i = 1) => {
+  if (i >= list.length) return max;
+  const price = list[i];
+  max = Math.max(max, price - buy);
+  buy = Math.min(buy, price);
+  return recursivemaxProfit(list, buy, max, i + 1);
 };
 
 const slidingWindows = (arr, k) => {
   console.log(slidingWindows.name, " ", arr, " ", k);
+  if (k <= 0 || arr.length < k) return [];
   let sumNum = arr.slice(0, k).reduce((a, b) => a + b);
   const result = [sumNum];
   for (let i = 0; i < arr.length - k; i++) {
@@ -155,7 +162,6 @@ const recursiveslidingWindows = (arr, k, sumNum = 0, i = 0) => {
   if (i < k) return recursiveslidingWindows(arr, k, sumNum + arr[i], i + 1);
 
   const result = [sumNum];
-
   const helper = (sumNum, i) => {
     if (i + k >= arr.length) return result;
 
@@ -196,15 +202,15 @@ console.log(balancedBrackets("(A)"));
 
 console.log(
   "recursiveBinarySearch target 33",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33, 0, 10)
+  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33, 0, 9)
 );
 console.log(
   "recursiveBinarySearch target 1",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1, 0, 10)
+  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1, 0, 9)
 );
 console.log(
   "recursiveBinarySearch target 61",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61, 0, 10)
+  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61, 0, 9)
 );
 
 console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33));
