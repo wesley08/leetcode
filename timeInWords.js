@@ -36,4 +36,4 @@ console.log(timeInWords(10, 22));
 console.log(timeInWords(12, 32));
 console.log(timeInWords(3, 12));
 console.log(timeInWords(5, 1));
-console.log(timeInWords(6, 00));
+console.log(timeInWords(06, 00));
