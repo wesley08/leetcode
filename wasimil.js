@@ -45,8 +45,10 @@ const recursiveBinarySearch = (
   if (left > right) return -1;
   const mid = Math.floor((left + right) / 2);
   if (list[mid] === target) return mid;
-  if (list[mid] < target)
+  if (list[mid] < target) {
     return recursiveBinarySearch(list, target, mid + 1, right);
+  }
+
   return recursiveBinarySearch(list, target, left, mid - 1);
 };
 
@@ -130,10 +132,10 @@ const maxProfit = (list) => {
   for (let i = 1; i < list.length; i++) {
     const number = list[i];
     const cal = number - buy;
-
     if (buy > number) buy = number;
     if (cal > max) max = cal;
   }
+
   return max;
 };
 
@@ -150,10 +152,12 @@ const slidingWindows = (arr, k) => {
   if (k <= 0 || arr.length < k) return [];
   let sumNum = arr.slice(0, k).reduce((a, b) => a + b);
   const result = [sumNum];
+
   for (let i = 0; i < arr.length - k; i++) {
     sumNum = sumNum - arr[i] + arr[i + k];
     result.push(sumNum);
   }
+
   return result;
 };
 
@@ -173,87 +177,103 @@ const recursiveslidingWindows = (arr, k, sumNum = 0, i = 0) => {
   return helper(sumNum, 0);
 };
 
+const reverseINT = (num) => {
+  const len = Math.ceil(Math.log10(num));
+  let temp = 0;
+  let i = 0;
+  while (num !== 0) {
+    const getLastNumber = num % Math.pow(10, i);
+    temp += (getLastNumber * Math.pow(10, len - i)) / Math.pow(10, i - 1);
+    num -= getLastNumber;
+    i++;
+  }
+
+  return temp;
+};
+
+console.log(reverseINT(2343112));
+
 console.log(slidingWindows([1, 2, 3, 4, 5, 6, 7], 4)); //3,5,7,9,11,13
 console.log(slidingWindows([1, 2, 3, 4, 5, 6, 7], 3)); //6,9,12,15,18
 console.log(slidingWindows([1, 2, 3, 56, 23, 63, 91], 4));
 console.log(slidingWindows([1, 2, 3, 56, 23, 63, 91], 5));
 
-console.log(
-  "recursiveslidingWindows",
-  recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 4)
-); //3,5,7,9,11,13
-console.log(
-  "recursiveslidingWindows",
-  recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 3)
-); //6,9,12,15,18
-console.log(
-  "recursiveslidingWindows",
-  recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 4)
-);
-console.log(
-  "recursiveslidingWindows",
-  recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 5)
-);
+// console.log(
+//   "recursiveslidingWindows",
+//   recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 4)
+// ); //3,5,7,9,11,13
+// console.log(
+//   "recursiveslidingWindows",
+//   recursiveslidingWindows([1, 2, 3, 4, 5, 6, 7], 3)
+// ); //6,9,12,15,18
+// console.log(
+//   "recursiveslidingWindows",
+//   recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 4)
+// );
+// console.log(
+//   "recursiveslidingWindows",
+//   recursiveslidingWindows([1, 2, 3, 56, 23, 63, 91], 5)
+// );
 
-console.log(balancedBrackets("([])(){}(())()()"));
-console.log(balancedBrackets("(agwgg)([ghhheah%&@Q])"));
-console.log(balancedBrackets(")[]}"));
-console.log(balancedBrackets("(A)"));
+// console.log(balancedBrackets("([])(){}(())()()"));
+// console.log(balancedBrackets("(agwgg)([ghhheah%&@Q])"));
+// console.log(balancedBrackets(")[]}"));
+// console.log(balancedBrackets("(A)"));
 
-console.log(
-  "recursiveBinarySearch target 33",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33, 0, 9)
-);
-console.log(
-  "recursiveBinarySearch target 1",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1, 0, 9)
-);
-console.log(
-  "recursiveBinarySearch target 61",
-  recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61, 0, 9)
-);
+// console.log(
+//   "recursiveBinarySearch target 33",
+//   recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33, 0, 9)
+// );
+// console.log(
+//   "recursiveBinarySearch target 1",
+//   recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1, 0, 9)
+// );
+// console.log(
+//   "recursiveBinarySearch target 61",
+//   recursiveBinarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61, 0, 9)
+// );
 
-console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33));
-console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1));
-console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61));
+// console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33));
+// console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 1));
+// console.log(binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 61));
 
-console.log(firstNonRepeatingCharacter("abdca"));
-console.log(firstNonRepeatingCharacter("adsfsdfdsfsdfsdfsdzaa"));
+// console.log(firstNonRepeatingCharacter("abdca"));
+// console.log(firstNonRepeatingCharacter("adsfsdfdsfsdfsdfsdzaa"));
 
-console.log(
-  "recursivefirstNonRepeatingCharacter ",
-  recursivefirstNonRepeatingCharacter("abdca", {}, 0)
-);
-console.log(
-  "recursivefirstNonRepeatingCharacter ",
-  recursivefirstNonRepeatingCharacter("adsfsdfdsfsdfsdfsdzaa", {}, 0)
-);
+// console.log(
+//   "recursivefirstNonRepeatingCharacter ",
+//   recursivefirstNonRepeatingCharacter("abdca", {}, 0)
+// );
+// console.log(
+//   "recursivefirstNonRepeatingCharacter ",
+//   recursivefirstNonRepeatingCharacter("adsfsdfdsfsdfsdfsdzaa", {}, 0)
+// );
 
-console.log(
-  generateDocument("Bste!hetsi ogEAxpelrt x ", "AlgoExpert is the Best!")
-);
-console.log(
-  generateDocument("Bste!hetsi ogEApelrt", "AlgoExpert is the Best!")
-);
-//dari dict kiri bisa generate untuk kata2 di kanan tidak kalau iya return true dan sebaliknya
-console.log(twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 1));
+// console.log(
+//   generateDocument("Bste!hetsi ogEAxpelrt x ", "AlgoExpert is the Best!")
+// );
+// console.log(
+//   generateDocument("Bste!hetsi ogEApelrt", "AlgoExpert is the Best!")
+// );
+// //dari dict kiri bisa generate untuk kata2 di kanan tidak kalau iya return true dan sebaliknya
+// console.log(twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 1));
 
-console.log(
-  "recursiveTwoSum target 1",
-  recursiveTwoSum([3, 5, -4, 8, 11, 1, -1, 6], 1, 0, {})
-);
-console.log(
-  "recursiveTwoSum target 11",
-  recursiveTwoSum([3, 5, -4, 8, 11, 1, -1, 6], 11, 0, {})
-);
+// console.log(
+//   "recursiveTwoSum target 1",
+//   recursiveTwoSum([3, 5, -4, 8, 11, 1, -1, 6], 1, 0, {})
+// );
+// console.log(
+//   "recursiveTwoSum target 11",
+//   recursiveTwoSum([3, 5, -4, 8, 11, 1, -1, 6], 11, 0, {})
+// );
 
-console.log(
-  "recursivemaxProfit",
-  recursivemaxProfit([7, 1, 5, 3, 6, 4, 10], 7, 0, 0)
-);
-console.log(
-  "recursivemaxProfit",
-  recursivemaxProfit([7, 1, 5, 3, 6, 4], 7, 0, 0)
-);
-console.log(maxProfit([7, 1, 5, 3, 6, 4, 10]));
-console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+// console.log(
+//   "recursivemaxProfit",
+//   recursivemaxProfit([7, 1, 5, 3, 6, 4, 10], 7, 0, 0)
+// );
+// console.log(
+//   "recursivemaxProfit",
+//   recursivemaxProfit([7, 1, 5, 3, 6, 4], 7, 0, 0)
+// );
+// console.log(maxProfit([7, 1, 5, 3, 6, 4, 10]));
+// console.log(maxProfit([7, 1, 5, 3, 6, 4]));

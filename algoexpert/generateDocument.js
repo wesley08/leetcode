@@ -16,4 +16,4 @@ function generateDocument(characters, document) {
 console.log(
   generateDocument("Bste!hetsi ogEAxpelrt x ", "AlgoExpert is the Best!")
 );
-// console.log(generateDocument("aabdc", "aacdb"));
+console.log(generateDocument("adbc", "aacdb"));
